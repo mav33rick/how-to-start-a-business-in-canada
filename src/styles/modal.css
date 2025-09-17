@@ -1,0 +1,36 @@
+/* ===== Modal Component ===== */
+.modal {
+  position: fixed; 
+  inset: 0; 
+  background: rgba(2,6,12,.65); 
+  display: none; 
+  align-items: center; 
+  justify-content: center; 
+  z-index: 1000;
+}
+
+.modal.open { 
+  display: flex; 
+}
+
+.modal .box { 
+  width: min(720px, 92vw); 
+  background: var(--panel); 
+  border: 1px solid var(--border); 
+  border-radius: 14px; 
+  box-shadow: var(--shadow); 
+  overflow: hidden; 
+}
+
+.modal header { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 14px 16px; 
+  border-bottom: 1px solid var(--border); 
+  background: #0c111a; 
+}
+
+.modal .body { 
+  padding: 16px; 
+}

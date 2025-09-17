@@ -1,0 +1,38 @@
+{
+  "name": "business-startup-guide-canada",
+  "version": "1.0.0",
+  "description": "Interactive guide for starting a business in Canada with province-specific information",
+  "main": "index.html",
+  "type": "module",
+  "scripts": {
+    "dev": "live-server --port=3000 --entry-file=index.html",
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "cat src/styles/main.css src/styles/components.css src/styles/modal.css src/styles/responsive.css > dist/styles.min.css",
+    "build:js": "mkdir -p dist && cp -r src/scripts/* dist/",
+    "clean": "rm -rf dist",
+    "validate": "npm run validate:json",
+    "validate:json": "node scripts/validate-data.js",
+    "serve": "python -m http.server 8000",
+    "test": "echo \"No tests specified yet\" && exit 0"
+  },
+  "keywords": [
+    "business",
+    "canada",
+    "startup",
+    "guide",
+    "registration",
+    "incorporation"
+  ],
+  "author": "Business Guide Team",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mav33rick/how-to-start-a-business-in-canada.git"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

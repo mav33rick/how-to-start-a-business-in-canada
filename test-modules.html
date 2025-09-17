@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Test</title>
+</head>
+<body>
+    <h1>Testing Modular Structure</h1>
+    <div id="status">Loading...</div>
+    
+    <script type="module">
+        async function testModules() {
+            try {
+                // Test data manager
+                const dataManager = (await import('./src/scripts/data-manager.js')).default;
+                await dataManager.loadData();
+                
+                // Test if we can get resources
+                const resources = dataManager.getProvincialResources('ON');
+                console.log('Ontario resources:', resources);
+                
+                // Test state manager
+                const stateManager = (await import('./src/scripts/state-manager.js')).default;
+                const state = stateManager.getState();
+                console.log('Initial state:', state);
+                
+                // Test business structures
+                const structures = dataManager.getBusinessStructures();
+                console.log('Business structures:', structures.length, 'found');
+                
+                document.getElementById('status').innerHTML = `
+                    <div style="color: green;">✅ All modules loaded successfully!</div>
+                    <ul>
+                        <li>Provincial resources: ${Object.keys(dataManager.resources.provincial).length} provinces</li>
+                        <li>Business structures: ${structures.length} types</li>
+                        <li>Steps: ${dataManager.getSteps().length} steps</li>
+                        <li>Initial state: ${JSON.stringify(state)}</li>
+                    </ul>
+                `;
+                
+            } catch (error) {
+                console.error('Module test failed:', error);
+                document.getElementById('status').innerHTML = `
+                    <div style="color: red;">❌ Module test failed: ${error.message}</div>
+                `;
+            }
+        }
+        
+        testModules();
+    </script>
+</body>
+</html>

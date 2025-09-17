@@ -1,0 +1,97 @@
+/* ===== CSS Custom Properties ===== */
+:root {
+  --bg: #0b0d12;
+  --panel: #131722;
+  --panel-2: #0f1420;
+  --text: #e6ebf2;
+  --muted: #a7b0c2;
+  --brand: #6aa7ff;
+  --ok: #5bd69e;
+  --warn: #ffb86b;
+  --danger: #ff6b6b;
+  --border: #1f2633;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+/* ===== Base Styles ===== */
+* { 
+  box-sizing: border-box; 
+}
+
+html, body { 
+  height: 100%; 
+}
+
+body {
+  margin: 0; 
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+  background: radial-gradient(1200px 600px at 15% -10%, #182035 0%, transparent 60%),
+              radial-gradient(900px 600px at 110% 20%, #1a2440 0%, transparent 60%),
+              var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* ===== Typography ===== */
+h1 { 
+  font-size: 28px; 
+  margin: 0 0 6px; 
+  letter-spacing: .2px; 
+}
+
+h3 { 
+  margin: 0; 
+  font-size: 16px; 
+}
+
+.sub { 
+  color: var(--muted); 
+  font-size: 14px; 
+}
+
+.muted { 
+  color: var(--muted); 
+}
+
+.tiny { 
+  font-size: 11px; 
+  color: var(--muted); 
+}
+
+/* ===== Layout Utilities ===== */
+.wrap { 
+  max-width: 1180px; 
+  margin: 0 auto; 
+  padding: 0 20px; 
+}
+
+.layout {
+  display: grid; 
+  grid-template-columns: 1fr 320px; 
+  gap: 22px;
+  align-items: start; 
+  padding: 16px 20px 80px;
+}
+
+.row { 
+  display: grid; 
+  gap: 12px; 
+  grid-template-columns: repeat(12, 1fr); 
+}
+
+.col-12 { grid-column: span 12; }
+.col-6 { grid-column: span 6; }
+.col-4 { grid-column: span 4; }
+
+/* ===== Links ===== */
+.inline-links a { 
+  color: var(--brand); 
+  text-decoration: none; 
+  border-bottom: 1px dotted rgba(106,167,255,.35); 
+}
+
+/* ===== Lists ===== */
+.list { 
+  margin: 0; 
+  padding-left: 18px; 
+}

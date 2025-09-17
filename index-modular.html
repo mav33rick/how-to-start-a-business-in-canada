@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Start a Business in Canada – Interactive Guide</title>
+  
+  <!-- Modular CSS Files -->
+  <link rel="stylesheet" href="src/styles/main.css" />
+  <link rel="stylesheet" href="src/styles/components.css" />
+  <link rel="stylesheet" href="src/styles/modal.css" />
+  <link rel="stylesheet" href="src/styles/responsive.css" />
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Start a Business in Canada</h1>
+      <div class="sub">Answer a few questions. Get a province‑aware step‑by‑step plan — all on one page.</div>
+    </div>
+  </header>
+
+  <div class="layout wrap">
+    <section>
+      <div class="card">
+        <div class="controls">
+          <div class="full">
+            <label for="province">Province / Territory</label>
+            <select id="province">
+              <option value="">Choose…</option>
+              <option value="AB">Alberta</option>
+              <option value="BC">British Columbia</option>
+              <option value="MB">Manitoba</option>
+              <option value="NB">New Brunswick</option>
+              <option value="NL">Newfoundland & Labrador</option>
+              <option value="NS">Nova Scotia</option>
+              <option value="NT">Northwest Territories</option>
+              <option value="NU">Nunavut</option>
+              <option value="ON">Ontario</option>
+              <option value="PE">Prince Edward Island</option>
+              <option value="QC">Quebec</option>
+              <option value="SK">Saskatchewan</option>
+              <option value="YT">Yukon</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label for="industry">Business Type</label>
+            <select id="industry">
+              <option value="general">General / Other</option>
+              <option value="retail">Retail</option>
+              <option value="service">Services</option>
+              <option value="online">Online / e‑commerce</option>
+              <option value="food">Food & Beverage</option>
+              <option value="construction">Construction / Trades</option>
+              <option value="professional">Professional Services</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label>Will you hire employees?</label>
+            <div class="seg" id="hireSeg">
+              <button type="button" data-value="no" class="active">No</button>
+              <button type="button" data-value="yes">Yes</button>
+            </div>
+          </div>
+
+          <div class="full">
+            <label>Expected annual revenue</label>
+            <div class="seg" id="revSeg">
+              <button type="button" data-value="lt30">Under $30,000</button>
+              <button type="button" data-value="gte30" class="active">$30,000 or more</button>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" id="generate">Generate my guide</button>
+          <button class="btn ghost" id="reset">Reset</button>
+          <span class="pill" id="stateInfo">Unsaved</span>
+        </div>
+      </div>
+
+      <main id="guide"></main>
+    </section>
+
+    <aside>
+      <div class="card aside-box">
+        <h3 class="aside-title">Checklist</h3>
+        <ol class="todo" id="todo"></ol>
+        <div class="tiny" style="margin-top:8px;">Your progress is saved in this browser.</div>
+      </div>
+      <div class="card aside-box" style="margin-top:12px;">
+        <h3 class="aside-title">At‑a‑glance</h3>
+        <div class="muted" id="summary">Choose options and generate your plan.</div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="box">
+      <header>
+        <h3 id="modalTitle">More info</h3>
+        <button class="btn" id="closeModal" aria-label="Close">Close</button>
+      </header>
+      <div class="body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <!-- Modular JavaScript -->
+  <script type="module" src="src/scripts/app.js"></script>
+</body>
+</html>

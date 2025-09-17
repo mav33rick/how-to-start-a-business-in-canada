@@ -1,0 +1,92 @@
+{
+  "provincial": {
+    "AB": {
+      "name": "Alberta",
+      "register": "https://www.corporateregistry.alberta.ca/",
+      "workersComp": "https://www.wcb.ab.ca/",
+      "taxNote": "GST 5%. No provincial sales tax; some industries need provincial licences."
+    },
+    "BC": {
+      "name": "British Columbia", 
+      "register": "https://www.bcregistry.gov.bc.ca/",
+      "workersComp": "https://www.worksafebc.com/",
+      "taxNote": "GST 5% + PST 7% (most goods/services)."
+    },
+    "MB": {
+      "name": "Manitoba",
+      "register": "https://companiesoffice.gov.mb.ca/",
+      "workersComp": "https://www.wcb.mb.ca/",
+      "taxNote": "GST 5% + RST 7%."
+    },
+    "NB": {
+      "name": "New Brunswick",
+      "register": "https://www.snb.ca/",
+      "workersComp": "https://www.worksafenb.ca/",
+      "taxNote": "HST 15% (federal + provincial)."
+    },
+    "NL": {
+      "name": "Newfoundland & Labrador",
+      "register": "https://www.servicenl.gov.nl.ca/",
+      "workersComp": "https://workplacenl.ca/",
+      "taxNote": "HST 15%."
+    },
+    "NS": {
+      "name": "Nova Scotia",
+      "register": "https://beta.novascotia.ca/",
+      "workersComp": "https://www.wcb.ns.ca/",
+      "taxNote": "HST 15%."
+    },
+    "NT": {
+      "name": "Northwest Territories",
+      "register": "https://www.justice.gov.nt.ca/en/corporate-registry/",
+      "workersComp": "https://www.wscc.nt.ca/",
+      "taxNote": "GST 5%. No territorial sales tax."
+    },
+    "NU": {
+      "name": "Nunavut",
+      "register": "https://gov.nu.ca/",
+      "workersComp": "https://www.wscc.nt.ca/",
+      "taxNote": "GST 5%. No territorial sales tax."
+    },
+    "ON": {
+      "name": "Ontario",
+      "register": "https://www.ontario.ca/page/register-business-name",
+      "workersComp": "https://www.wsib.ca/",
+      "taxNote": "HST 13%."
+    },
+    "PE": {
+      "name": "Prince Edward Island",
+      "register": "https://www.princeedwardisland.ca/en/topic/bizpal-business-permits-and-licences",
+      "workersComp": "https://www.wcb.pe.ca/",
+      "taxNote": "HST 15%."
+    },
+    "QC": {
+      "name": "Quebec",
+      "register": "https://www.registraireentreprises.gouv.qc.ca/",
+      "workersComp": "https://www.cnesst.gouv.qc.ca/",
+      "taxNote": "GST 5% + QST 9.975%."
+    },
+    "SK": {
+      "name": "Saskatchewan",
+      "register": "https://www.isc.ca/Registry/BusinessRegistry/",
+      "workersComp": "https://www.wcbsask.com/",
+      "taxNote": "GST 5% + PST 6%."
+    },
+    "YT": {
+      "name": "Yukon",
+      "register": "https://yukon.ca/en/doing-business/permits-licences-and-registrations",
+      "workersComp": "https://www.wcb.yk.ca/",
+      "taxNote": "GST 5%. No territorial sales tax."
+    }
+  },
+  "federal": {
+    "bn": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/registering-your-business/register.html",
+    "craMyBiz": "https://www.canada.ca/en/revenue-agency/services/e-services/e-services-businesses/business-account.html",
+    "gstHst": "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses.html",
+    "nameSearch": "https://www.nuans.com/",
+    "corpFed": "https://ised-isde.canada.ca/site/corporations-canada/en",
+    "casl": "https://fightspam.gc.ca/",
+    "pipeda": "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/",
+    "trademarks": "https://ised-isde.canada.ca/site/canadian-intellectual-property-office/en/trademarks"
+  }
+}

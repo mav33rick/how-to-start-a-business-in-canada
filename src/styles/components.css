@@ -1,0 +1,251 @@
+/* ===== Header Component ===== */
+header {
+  padding: 32px 20px 16px; 
+  position: sticky; 
+  top: 0; 
+  z-index: 50;
+  background: linear-gradient(to bottom, rgba(11,13,18,.95), rgba(11,13,18,.65) 60%, transparent);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ===== Card Component ===== */
+.card {
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border: 1px solid var(--border);
+  border-radius: 14px; 
+  box-shadow: var(--shadow);
+}
+
+.panel { 
+  background: #0c111a; 
+  border: 1px solid var(--border); 
+  border-radius: 12px; 
+  padding: 14px; 
+}
+
+/* ===== Controls Component ===== */
+.controls { 
+  padding: 18px; 
+  display: grid; 
+  gap: 12px; 
+  grid-template-columns: repeat(4, minmax(0,1fr)); 
+}
+
+.controls .full { 
+  grid-column: 1 / -1; 
+}
+
+.controls label { 
+  font-size: 12px; 
+  color: var(--muted); 
+  display: block; 
+  margin-bottom: 6px; 
+}
+
+.controls select, 
+.controls input[type="text"], 
+.controls .seg {
+  width: 100%; 
+  background: #0d111a; 
+  color: var(--text); 
+  border: 1px solid var(--border); 
+  border-radius: 10px;
+  padding: 10px 12px; 
+  outline: none;
+}
+
+/* ===== Segment Control Component ===== */
+.seg { 
+  display: flex; 
+  gap: 6px; 
+  padding: 6px; 
+}
+
+.seg button { 
+  flex: 1; 
+  padding: 10px 12px; 
+  border-radius: 8px; 
+  border: 1px solid var(--border); 
+  background: #0b111a; 
+  color: var(--text); 
+  cursor: pointer; 
+}
+
+.seg button.active { 
+  border-color: var(--brand); 
+  box-shadow: 0 0 0 2px rgba(106,167,255,.25) inset; 
+}
+
+/* ===== Button Component ===== */
+.btn {
+  appearance: none; 
+  border: 1px solid var(--border); 
+  background: #0e1320; 
+  color: var(--text);
+  padding: 10px 14px; 
+  border-radius: 10px; 
+  cursor: pointer; 
+  font-weight: 600;
+}
+
+.btn.primary { 
+  background: linear-gradient(180deg, #2a4a8f, #1a3773); 
+  border-color: #2a4a8f; 
+}
+
+.btn.ghost { 
+  background: transparent; 
+}
+
+.actions { 
+  display: flex; 
+  gap: 10px; 
+  padding: 0 18px 18px; 
+}
+
+/* ===== Step Component ===== */
+main { 
+  display: grid; 
+  gap: 14px; 
+}
+
+.step { 
+  overflow: hidden; 
+}
+
+.step header {
+  position: relative; 
+  background: none; 
+  border: 0; 
+  padding: 0; 
+  margin: 0; 
+  backdrop-filter: none;
+}
+
+.step-head { 
+  padding: 16px 18px; 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  cursor: pointer; 
+}
+
+.badge { 
+  font-size: 11px; 
+  color: #0b1514; 
+  background: var(--ok); 
+  padding: 2px 8px; 
+  border-radius: 999px; 
+  font-weight: 700; 
+}
+
+.kicker { 
+  color: var(--muted); 
+  font-size: 12px; 
+}
+
+.step-title { 
+  font-size: 18px; 
+  font-weight: 700; 
+  flex: 1; 
+}
+
+.chev { 
+  transform: rotate(0deg); 
+  transition: transform .2s ease; 
+  opacity: .9; 
+}
+
+.step.open .chev { 
+  transform: rotate(90deg); 
+}
+
+.step-body { 
+  padding: 0 18px 18px; 
+  display: none; 
+}
+
+.step.open .step-body { 
+  display: block; 
+}
+
+/* ===== Sidebar Components ===== */
+aside { 
+  position: sticky; 
+  top: 86px; 
+}
+
+.aside-box { 
+  padding: 16px; 
+}
+
+.aside-title { 
+  font-weight: 800; 
+  margin: 0 0 8px; 
+}
+
+.todo { 
+  list-style: none; 
+  margin: 0; 
+  padding: 0; 
+}
+
+.todo li { 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  padding: 10px 8px; 
+  border-bottom: 1px dashed var(--border); 
+}
+
+.todo input { 
+  width: 16px; 
+  height: 16px; 
+}
+
+/* ===== Utility Components ===== */
+.pill { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 8px; 
+  font-size: 12px; 
+  color: var(--muted); 
+  padding: 6px 10px; 
+  border: 1px solid var(--border); 
+  border-radius: 999px; 
+  background: #0b111a; 
+}
+
+.info { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 6px; 
+  font-size: 12px; 
+  color: var(--muted); 
+}
+
+.info button { 
+  border: 0; 
+  background: transparent; 
+  color: var(--brand); 
+  cursor: pointer; 
+  text-decoration: underline; 
+}
+
+.mark-row { 
+  display: flex; 
+  gap: 10px; 
+  flex-wrap: wrap; 
+}
+
+.mark { 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+}
+
+.mark input { 
+  width: 18px; 
+  height: 18px; 
+}

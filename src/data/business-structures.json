@@ -1,0 +1,58 @@
+{
+  "structures": [
+    {
+      "id": "sole",
+      "name": "Sole Proprietorship",
+      "description": "Owned by one person. Easiest and lowest cost to start.",
+      "pros": [
+        "Simple setup",
+        "Low ongoing paperwork", 
+        "You keep all profits"
+      ],
+      "cons": [
+        "Unlimited personal liability",
+        "Harder to raise capital"
+      ]
+    },
+    {
+      "id": "partnership", 
+      "name": "Partnership",
+      "description": "Two or more people share ownership.",
+      "pros": [
+        "Shared startup costs",
+        "Flexible profit sharing"
+      ],
+      "cons": [
+        "Joint liability (unless limited partnership)",
+        "Need a strong partnership agreement"
+      ]
+    },
+    {
+      "id": "corporation",
+      "name": "Corporation", 
+      "description": "Separate legal entity. Can be incorporated federally or provincially.",
+      "pros": [
+        "Limited liability",
+        "Potential tax planning",
+        "Easier to sell shares"
+      ],
+      "cons": [
+        "Higher setup/maintenance cost",
+        "Continuous filings and records"
+      ]
+    },
+    {
+      "id": "cooperative",
+      "name": "Co‑operative",
+      "description": "Owned and democratically controlled by members for mutual benefit.",
+      "pros": [
+        "Member control",
+        "Community focused"
+      ],
+      "cons": [
+        "Complex governance", 
+        "May face funding constraints"
+      ]
+    }
+  ]
+}

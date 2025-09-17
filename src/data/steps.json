@@ -1,0 +1,85 @@
+{
+  "steps": [
+    {
+      "key": "structure",
+      "label": "Choose a Business Structure",
+      "title": "Choose a Business Structure",
+      "kicker": "Pick what fits your risk and growth plans",
+      "order": 1
+    },
+    {
+      "key": "name",
+      "label": "Choose & Clear Your Name",
+      "title": "Choose & Clear Your Name", 
+      "kicker": "Avoid conflicts before you print cards",
+      "order": 2
+    },
+    {
+      "key": "register",
+      "label": "Register or Incorporate",
+      "title": "Register or Incorporate",
+      "kicker": "Provincial or federal incorporation; operating registration required provincially",
+      "order": 3
+    },
+    {
+      "key": "cra",
+      "label": "CRA Business Number & Tax Accounts",
+      "title": "CRA Business Number & Tax Accounts",
+      "kicker": "You indicated revenue ≥ $30k — register for GST/HST",
+      "kickerConditional": "Consider voluntary GST/HST registration",
+      "order": 4
+    },
+    {
+      "key": "licences", 
+      "label": "Licences & Permits",
+      "title": "Licences & Permits",
+      "kicker": "Municipal, provincial/territorial, sometimes federal",
+      "order": 5
+    },
+    {
+      "key": "banking",
+      "label": "Banking & Bookkeeping",
+      "title": "Banking & Bookkeeping", 
+      "kicker": "Separate finances from day one",
+      "order": 6
+    },
+    {
+      "key": "hiring",
+      "label": "Hiring & Workers' Comp",
+      "title": "Hiring & Workers' Comp",
+      "kicker": "You indicated you will hire — set these up",
+      "kickerConditional": "Skip if not hiring yet", 
+      "order": 7
+    },
+    {
+      "key": "privacy",
+      "label": "Privacy & Email Marketing Rules",
+      "title": "Privacy & Email Marketing Rules",
+      "kicker": "If you collect personal info or send promos",
+      "order": 8
+    },
+    {
+      "key": "brand",
+      "label": "Protect Your Brand (Optional)",
+      "title": "Protect Your Brand (Optional)",
+      "kicker": "Names and logos can be trademarked", 
+      "order": 9
+    },
+    {
+      "key": "finish",
+      "label": "Finish & Operate", 
+      "title": "Finish & Operate",
+      "kicker": "You now have a clear path",
+      "order": 10
+    }
+  ],
+  "industryTypes": [
+    { "value": "general", "label": "General / Other" },
+    { "value": "retail", "label": "Retail" },
+    { "value": "service", "label": "Services" },
+    { "value": "online", "label": "Online / e‑commerce" },
+    { "value": "food", "label": "Food & Beverage" },
+    { "value": "construction", "label": "Construction / Trades" },
+    { "value": "professional", "label": "Professional Services" }
+  ]
+}
