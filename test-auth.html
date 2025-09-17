@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth System Test</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #0b0d12;
+            color: #e6ebf2;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #1f2633;
+            border-radius: 8px;
+            background: #131722;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .success { background: rgba(91, 214, 158, 0.2); color: #5bd69e; }
+        .error { background: rgba(255, 107, 107, 0.2); color: #ff9999; }
+        .info { background: rgba(106, 167, 255, 0.2); color: #6aa7ff; }
+        button {
+            background: #2a4a8f;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #4a7fff; }
+        input {
+            background: #0d111a;
+            border: 1px solid #1f2633;
+            color: #e6ebf2;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Authentication System Test</h1>
+    
+    <div class="test-section">
+        <h2>Module Loading Test</h2>
+        <div id="moduleStatus" class="status info">Testing module imports...</div>
+        <button onclick="testModules()">Test Module Loading</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Supabase Connection Test</h2>
+        <div id="supabaseStatus" class="status info">Ready to test connection</div>
+        <button onclick="testSupabaseConnection()">Test Supabase Connection</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Authentication Test</h2>
+        <div id="authStatus" class="status info">Ready to test authentication</div>
+        <div>
+            <input type="email" id="testEmail" placeholder="test@example.com" value="test@example.com">
+            <input type="password" id="testPassword" placeholder="password123" value="password123">
+        </div>
+        <button onclick="testSignUp()">Test Sign Up</button>
+        <button onclick="testSignIn()">Test Sign In</button>
+        <button onclick="testSignOut()">Test Sign Out</button>
+    </div>
+
+    <div class="test-section">
+        <h2>State Management Test</h2>
+        <div id="stateStatus" class="status info">Ready to test state management</div>
+        <button onclick="testStateManager()">Test State Manager</button>
+        <button onclick="testProgressSync()">Test Progress Sync</button>
+    </div>
+
+    <div class="test-section">
+        <h2>UI Integration Test</h2>
+        <div id="uiStatus" class="status info">Ready to test UI integration</div>
+        <button onclick="testUIIntegration()">Test UI Components</button>
+    </div>
+
+    <script type="module">
+        let authManager, enhancedStateManager, supabaseClient, authUI, syncManager;
+
+        // Global test functions
+        window.testModules = async function() {
+            const status = document.getElementById('moduleStatus');
+            try {
+                status.textContent = 'Loading modules...';
+                status.className = 'status info';
+
+                // Test importing modules
+                const modules = await Promise.all([
+                    import('./src/lib/supabase.js'),
+                    import('./src/scripts/auth-manager.js'),
+                    import('./src/scripts/enhanced-state-manager.js'),
+                    import('./src/scripts/auth-ui.js'),
+                    import('./src/scripts/sync-manager.js')
+                ]);
+
+                supabaseClient = modules[0].default;
+                authManager = modules[1].default;
+                enhancedStateManager = modules[2].default;
+                authUI = modules[3].default;
+                syncManager = modules[4].default;
+
+                status.textContent = '✅ All modules loaded successfully!';
+                status.className = 'status success';
+                
+                console.log('Loaded modules:', { supabaseClient, authManager, enhancedStateManager, authUI, syncManager });
+            } catch (error) {
+                status.textContent = `❌ Module loading failed: ${error.message}`;
+                status.className = 'status error';
+                console.error('Module loading error:', error);
+            }
+        };
+
+        window.testSupabaseConnection = async function() {
+            const status = document.getElementById('supabaseStatus');
+            try {
+                status.textContent = 'Testing Supabase connection...';
+                status.className = 'status info';
+
+                if (!supabaseClient) {
+                    throw new Error('Supabase client not loaded. Run module test first.');
+                }
+
+                await supabaseClient.initialize();
+                
+                // Test basic connection
+                const session = await supabaseClient.getSession();
+                
+                status.textContent = '✅ Supabase connection successful!';
+                status.className = 'status success';
+                console.log('Supabase session:', session);
+            } catch (error) {
+                status.textContent = `❌ Supabase connection failed: ${error.message}`;
+                status.className = 'status error';
+                console.error('Supabase connection error:', error);
+            }
+        };
+
+        window.testSignUp = async function() {
+            const status = document.getElementById('authStatus');
+            const email = document.getElementById('testEmail').value;
+            const password = document.getElementById('testPassword').value;
+
+            try {
+                status.textContent = 'Testing sign up...';
+                status.className = 'status info';
+
+                if (!authManager) {
+                    throw new Error('Auth manager not loaded. Run module test first.');
+                }
+
+                await authManager.initialize();
+                const result = await authManager.signUp(email, password);
+                
+                if (result.success) {
+                    status.textContent = `✅ Sign up successful! ${result.message}`;
+                    status.className = 'status success';
+                } else {
+                    status.textContent = `⚠️ Sign up result: ${result.error}`;
+                    status.className = 'status error';
+                }
+                
+                console.log('Sign up result:', result);
+            } catch (error) {
+                status.textContent = `❌ Sign up failed: ${error.message}`;
+                status.className = 'status error';
+                console.error('Sign up error:', error);
+            }
+        };
+
+        window.testSignIn = async function() {
+            const status = document.getElementById('authStatus');
+            const email = document.getElementById('testEmail').value;
+            const password = document.getElementById('testPassword').value;
+
+            try {
+                status.textContent = 'Testing sign in...';
+                status.className = 'status info';
+
+                if (!authManager) {
+                    throw new Error('Auth manager not loaded. Run module test first.');
+                }
+
+                const result = await authManager.signIn(email, password);
+                
+                if (result.success) {
+                    status.textContent = `✅ Sign in successful! Welcome ${result.user?.email}`;
+                    status.className = 'status success';
+                } else {
+                    status.textContent = `⚠️ Sign in failed: ${result.error}`;
+                    status.className = 'status error';
+                }
+                
+                console.log('Sign in result:', result);
+            } catch (error) {
+                status.textContent = `❌ Sign in failed: ${error.message}`;
+                status.className = 'status error';
+                console.error('Sign in error:', error);
+            }
+        };
+
+        window.testSignOut = async function() {
+            const status = document.getElementById('authStatus');
+
+            try {
+                status.textContent = 'Testing sign out...';
+                status.className = 'status info';
+
+                if (!authManager) {
+                    throw new Error('Auth manager not loaded. Run module test first.');
+                }
+
+                const result = await authManager.signOut();
+                
+                if (result.success) {
+                    status.textContent = '✅ Sign out successful!';
+                    status.className = 'status success';
+                } else {
+                    status.textContent = `⚠️ Sign out failed: ${result.error}`;
+                    status.className = 'status error';
+                }
+                
+                console.log('Sign out result:', result);
+            } catch (error) {
+                status.textContent = `❌ Sign out failed: ${error.message}`;
+                status.className = 'status error';
+                console.error('Sign out error:', error);
+            }
+        };
+
+        window.testStateManager = async function() {
+            const status = document.getElementById('stateStatus');
+
+            try {
+                status.textContent = 'Testing state manager...';
+                status.className = 'status info';
+
+                if (!enhancedStateManager) {
+                    throw new Error('Enhanced state manager not loaded. Run module test first.');
+                }
+
+                await enhancedStateManager.initialize();
+                
+                // Test state operations
+                enhancedStateManager.setProvince('ON');
+                enhancedStateManager.setIndustry('tech');
+                enhancedStateManager.setStepCompleted('structure', true);
+                
+                const state = enhancedStateManager.getState();
+                
+                status.textContent = `✅ State manager working! Province: ${state.province}, Industry: ${state.industry}`;
+                status.className = 'status success';
+                console.log('Current state:', state);
+            } catch (error) {
+                status.textContent = `❌ State manager failed: ${error.message}`;
+                status.className = 'status error';
+                console.error('State manager error:', error);
+            }
+        };
+
+        window.testProgressSync = async function() {
+            const status = document.getElementById('stateStatus');
+
+            try {
+                status.textContent = 'Testing progress sync...';
+                status.className = 'status info';
+
+                if (!enhancedStateManager) {
+                    throw new Error('State manager not loaded. Run module test first.');
+                }
+
+                // Test sync operations
+                const syncResult = await enhancedStateManager.forceSyncToCloud();
+                
+                if (syncResult) {
+                    status.textContent = '✅ Progress sync successful!';
+                    status.className = 'status success';
+                } else {
+                    status.textContent = '⚠️ Sync failed (may need authentication)';
+                    status.className = 'status error';
+                }
+                
+                console.log('Sync result:', syncResult);
+            } catch (error) {
+                status.textContent = `❌ Progress sync failed: ${error.message}`;
+                status.className = 'status error';
+                console.error('Progress sync error:', error);
+            }
+        };
+
+        window.testUIIntegration = async function() {
+            const status = document.getElementById('uiStatus');
+
+            try {
+                status.textContent = 'Testing UI integration...';
+                status.className = 'status info';
+
+                if (!authUI) {
+                    throw new Error('Auth UI not loaded. Run module test first.');
+                }
+
+                await authUI.initialize();
+                
+                status.textContent = '✅ UI integration successful! Check for auth modal in header.';
+                status.className = 'status success';
+                console.log('Auth UI initialized');
+            } catch (error) {
+                status.textContent = `❌ UI integration failed: ${error.message}`;
+                status.className = 'status error';
+                console.error('UI integration error:', error);
+            }
+        };
+
+        // Auto-run module test on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => window.testModules(), 1000);
+        });
+    </script>
+</body>
+</html>
