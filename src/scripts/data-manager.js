@@ -48,6 +48,9 @@ class DataManager {
     if (!this.loaded) {
       throw new Error('Data not loaded yet. Call loadData() first.');
     }
+    console.log('Getting provincial resources for:', provinceCode);
+    console.log('Available provinces:', Object.keys(this.resources.provincial));
+    console.log('Resources object:', this.resources.provincial[provinceCode]);
     return this.resources.provincial[provinceCode];
   }
 

@@ -106,6 +106,8 @@ export class UIComponents {
 
     if (!provincialResources) {
       console.error('Provincial resources not found for:', state.province);
+      console.error('DataManager loaded status:', dataManager.loaded);
+      console.error('DataManager resources:', dataManager.resources);
       console.error('Available provinces in data:', Object.keys(dataManager.resources?.provincial || {}));
       return;
     }
