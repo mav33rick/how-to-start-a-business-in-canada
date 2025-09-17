@@ -115,6 +115,13 @@ class SupabaseClient {
    */
   async signUp(email, password, options = {}) {
     const client = this.getClient();
+    
+    console.log('Supabase signUp config:', {
+      email,
+      emailRedirectTo: supabaseConfig.auth.emailConfirmRedirectTo,
+      siteUrl: supabaseConfig.siteUrl
+    });
+    
     return await client.auth.signUp({
       email,
       password,

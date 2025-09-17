@@ -138,6 +138,8 @@ export class AuthManager {
    */
   async signUp(email, password, options = {}) {
     try {
+      console.log('Starting signup process for:', email);
+      
       const result = await supabaseClient.signUp(email, password, {
         metadata: {
           display_name: options.displayName || email.split('@')[0],
@@ -145,14 +147,26 @@ export class AuthManager {
         }
       });
 
+      console.log('Signup result:', {
+        data: result.data,
+        error: result.error,
+        hasUser: !!result.data?.user,
+        hasSession: !!result.data?.session,
+        userEmail: result.data?.user?.email,
+        emailConfirmed: result.data?.user?.email_confirmed_at
+      });
+
       if (result.error) {
         throw result.error;
       }
 
+      const needsConfirmation = !result.data?.session;
+      console.log('Email confirmation needed:', needsConfirmation);
+
       return {
         success: true,
         user: result.data?.user,
-        needsEmailConfirmation: !result.data?.session,
+        needsEmailConfirmation: needsConfirmation,
         message: result.data?.session 
           ? 'Account created successfully!'
           : 'Please check your email to confirm your account.'
