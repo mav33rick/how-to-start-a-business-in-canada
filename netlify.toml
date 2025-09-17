@@ -1,37 +1,49 @@
 [build]
-  # No build command needed for static files, but specify if using build process later
-  # command = "npm run build"
+  # No build command needed for static files
   publish = "."
   
   # Environment variables for production
   [build.environment]
     NODE_VERSION = "18"
 
-[headers]
-  # Ensure JavaScript modules are served with correct MIME type
+# JavaScript modules with correct MIME type
+[[headers]]
   for = "*.js"
   [headers.values]
     Content-Type = "application/javascript; charset=utf-8"
     Cache-Control = "public, max-age=31536000"
-  
-  # JSON data files
+
+# JSON data files
+[[headers]]
   for = "*.json"  
   [headers.values]
     Content-Type = "application/json; charset=utf-8"
     Cache-Control = "public, max-age=86400"
     
-  # CSS files
+# CSS files
+[[headers]]
   for = "*.css"
   [headers.values]
     Content-Type = "text/css; charset=utf-8"
     Cache-Control = "public, max-age=31536000"
     
-  # HTML files
+# HTML files
+[[headers]]
   for = "*.html"
   [headers.values]
     Cache-Control = "public, max-age=3600"
 
-# Redirects for SPA-like behavior (optional)
+# Security headers for all files
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'"
+
+# Redirects for modular version
 [[redirects]]
   from = "/guide"
   to = "/index-modular.html"
@@ -47,14 +59,3 @@
   from = "/"
   to = "/index-modular.html"
   status = 200
-
-# Security headers
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    # Content Security Policy for ES6 modules
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'"
