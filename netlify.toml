@@ -42,13 +42,11 @@
   to = "/index-modular.html"
   status = 200
 
-# Ensure the main app is accessible at root for modular version
+# Use modular version as default entry point
 [[redirects]]
   from = "/"
   to = "/index-modular.html"
   status = 200
-  # Only redirect if index.html doesn't exist or we want to prioritize modular version
-  conditions = {Role = ["admin"]} # Remove this line if you want modular as default
 
 # Security headers
 [[headers]]
