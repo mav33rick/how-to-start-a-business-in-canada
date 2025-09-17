@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Start a Business in Canada – Interactive Guide</title>
+  <style>
+    :root {
+      --bg: #0b0d12;
+      --panel: #131722;
+      --panel-2: #0f1420;
+      --text: #e6ebf2;
+      --muted: #a7b0c2;
+      --brand: #6aa7ff;
+      --ok: #5bd69e;
+      --warn: #ffb86b;
+      --danger: #ff6b6b;
+      --border: #1f2633;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 15% -10%, #182035 0%, transparent 60%),
+                  radial-gradient(900px 600px at 110% 20%, #1a2440 0%, transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    header {
+      padding: 32px 20px 16px; position: sticky; top: 0; z-index: 50;
+      background: linear-gradient(to bottom, rgba(11,13,18,.95), rgba(11,13,18,.65) 60%, transparent);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+    h1 { font-size: 28px; margin: 0 0 6px; letter-spacing: .2px; }
+    .sub { color: var(--muted); font-size: 14px; }
+
+    .layout {
+      display: grid; grid-template-columns: 1fr 320px; gap: 22px;
+      align-items: start; padding: 16px 20px 80px;
+    }
+
+    @media (max-width: 980px) {
+      .layout { grid-template-columns: 1fr; }
+      aside { position: static; top: auto; }
+    }
+
+    .card {
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid var(--border);
+      border-radius: 14px; box-shadow: var(--shadow);
+    }
+
+    .controls { padding: 18px; display: grid; gap: 12px; grid-template-columns: repeat(4, minmax(0,1fr)); }
+    .controls .full { grid-column: 1 / -1; }
+    .controls label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 6px; }
+    .controls select, .controls input[type="text"], .controls .seg {
+      width: 100%; background: #0d111a; color: var(--text); border: 1px solid var(--border); border-radius: 10px;
+      padding: 10px 12px; outline: none;
+    }
+
+    .seg { display: flex; gap: 6px; padding: 6px; }
+    .seg button { flex: 1; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--border); background: #0b111a; color: var(--text); cursor: pointer; }
+    .seg button.active { border-color: var(--brand); box-shadow: 0 0 0 2px rgba(106,167,255,.25) inset; }
+
+    .actions { display: flex; gap: 10px; padding: 0 18px 18px; }
+    .btn {
+      appearance: none; border: 1px solid var(--border); background: #0e1320; color: var(--text);
+      padding: 10px 14px; border-radius: 10px; cursor: pointer; font-weight: 600;
+    }
+    .btn.primary { background: linear-gradient(180deg, #2a4a8f, #1a3773); border-color: #2a4a8f; }
+    .btn.ghost { background: transparent; }
+
+    main { display: grid; gap: 14px; }
+
+    .step { overflow: hidden; }
+    .step header {
+      position: relative; background: none; border: 0; padding: 0; margin: 0; backdrop-filter: none;
+    }
+    .step-head { padding: 16px 18px; display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .badge { font-size: 11px; color: #0b1514; background: var(--ok); padding: 2px 8px; border-radius: 999px; font-weight: 700; }
+    .kicker { color: var(--muted); font-size: 12px; }
+    .step-title { font-size: 18px; font-weight: 700; flex: 1; }
+    .chev { transform: rotate(0deg); transition: transform .2s ease; opacity: .9; }
+    .step.open .chev { transform: rotate(90deg); }
+
+    .step-body { padding: 0 18px 18px; display: none; }
+    .step.open .step-body { display: block; }
+
+    .row { display: grid; gap: 12px; grid-template-columns: repeat(12, 1fr); }
+    .col-12 { grid-column: span 12; }
+    .col-6 { grid-column: span 6; }
+    .col-4 { grid-column: span 4; }
+    @media (max-width: 760px){ .col-6, .col-4 { grid-column: span 12; } }
+
+    .panel { background: #0c111a; border: 1px solid var(--border); border-radius: 12px; padding: 14px; }
+    .muted { color: var(--muted); }
+
+    .list { margin: 0; padding-left: 18px; }
+
+    .inline-links a { color: var(--brand); text-decoration: none; border-bottom: 1px dotted rgba(106,167,255,.35); }
+
+    .mark-row { display:flex; gap:10px; flex-wrap: wrap; }
+    .mark { display:flex; align-items:center; gap:8px; }
+    .mark input { width:18px; height:18px; }
+
+    aside { position: sticky; top: 86px; }
+    .aside-box { padding: 16px; }
+    .aside-title { font-weight: 800; margin: 0 0 8px; }
+    .todo { list-style: none; margin: 0; padding: 0; }
+    .todo li { display: flex; align-items: center; gap: 10px; padding: 10px 8px; border-bottom: 1px dashed var(--border); }
+    .todo input { width: 16px; height: 16px; }
+
+    .pill { display:inline-flex; align-items:center; gap:8px; font-size: 12px; color: var(--muted); padding: 6px 10px; border:1px solid var(--border); border-radius:999px; background:#0b111a; }
+
+    .info { display:inline-flex; align-items:center; gap:6px; font-size: 12px; color: var(--muted); }
+    .info button { border: 0; background: transparent; color: var(--brand); cursor: pointer; text-decoration: underline; }
+
+    /* Modal */
+    .modal {
+      position: fixed; inset: 0; background: rgba(2,6,12,.65); display: none; align-items: center; justify-content: center; z-index: 1000;
+    }
+    .modal.open { display: flex; }
+    .modal .box { width: min(720px, 92vw); background: var(--panel); border:1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
+    .modal header { display:flex; align-items:center; justify-content: space-between; padding: 14px 16px; border-bottom:1px solid var(--border); background: #0c111a; }
+    .modal h3 { margin: 0; font-size: 16px; }
+    .modal .body { padding: 16px; }
+
+    .tiny { font-size: 11px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Start a Business in Canada</h1>
+      <div class="sub">Answer a few questions. Get a province‑aware step‑by‑step plan — all on one page.</div>
+    </div>
+  </header>
+
+  <div class="layout wrap">
+    <section>
+      <div class="card">
+        <div class="controls">
+          <div class="full">
+            <label for="province">Province / Territory</label>
+            <select id="province">
+              <option value="">Choose…</option>
+              <option value="AB">Alberta</option>
+              <option value="BC">British Columbia</option>
+              <option value="MB">Manitoba</option>
+              <option value="NB">New Brunswick</option>
+              <option value="NL">Newfoundland & Labrador</option>
+              <option value="NS">Nova Scotia</option>
+              <option value="NT">Northwest Territories</option>
+              <option value="NU">Nunavut</option>
+              <option value="ON">Ontario</option>
+              <option value="PE">Prince Edward Island</option>
+              <option value="QC">Quebec</option>
+              <option value="SK">Saskatchewan</option>
+              <option value="YT">Yukon</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label for="industry">Business Type</label>
+            <select id="industry">
+              <option value="general">General / Other</option>
+              <option value="retail">Retail</option>
+              <option value="service">Services</option>
+              <option value="online">Online / e‑commerce</option>
+              <option value="food">Food & Beverage</option>
+              <option value="construction">Construction / Trades</option>
+              <option value="professional">Professional Services</option>
+            </select>
+          </div>
+
+          <div class="full">
+            <label>Will you hire employees?</label>
+            <div class="seg" id="hireSeg">
+              <button type="button" data-value="no" class="active">No</button>
+              <button type="button" data-value="yes">Yes</button>
+            </div>
+          </div>
+
+          <div class="full">
+            <label>Expected annual revenue</label>
+            <div class="seg" id="revSeg">
+              <button type="button" data-value="lt30">Under $30,000</button>
+              <button type="button" data-value="gte30" class="active">$30,000 or more</button>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="btn primary" id="generate">Generate my guide</button>
+          <button class="btn ghost" id="reset">Reset</button>
+          <span class="pill" id="stateInfo">Unsaved</span>
+        </div>
+      </div>
+
+      <main id="guide"></main>
+    </section>
+
+    <aside>
+      <div class="card aside-box">
+        <h3 class="aside-title">Checklist</h3>
+        <ol class="todo" id="todo"></ol>
+        <div class="tiny" style="margin-top:8px;">Your progress is saved in this browser.</div>
+      </div>
+      <div class="card aside-box" style="margin-top:12px;">
+        <h3 class="aside-title">At‑a‑glance</h3>
+        <div class="muted" id="summary">Choose options and generate your plan.</div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="box">
+      <header>
+        <h3 id="modalTitle">More info</h3>
+        <button class="btn" id="closeModal" aria-label="Close">Close</button>
+      </header>
+      <div class="body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Data (verify official URLs before production; placeholder where noted) ----------
+    const resources = {
+      AB: {
+        register: "https://www.corporateregistry.alberta.ca/", // verify
+        workersComp: "https://www.wcb.ab.ca/",
+        taxNote: "GST 5%. No provincial sales tax; some industries need provincial licences.",
+      },
+      BC: {
+        register: "https://www.bcregistry.gov.bc.ca/",
+        workersComp: "https://www.worksafebc.com/",
+        taxNote: "GST 5% + PST 7% (most goods/services).",
+      },
+      MB: {
+        register: "https://companiesoffice.gov.mb.ca/",
+        workersComp: "https://www.wcb.mb.ca/",
+        taxNote: "GST 5% + RST 7%.",
+      },
+      NB: {
+        register: "https://www.snb.ca/",
+        workersComp: "https://www.worksafenb.ca/",
+        taxNote: "HST 15% (federal + provincial).",
+      },
+      NL: {
+        register: "https://www.servicenl.gov.nl.ca/",
+        workersComp: "https://workplacenl.ca/",
+        taxNote: "HST 15%.",
+      },
+      NS: {
+        register: "https://beta.novascotia.ca/",
+        workersComp: "https://www.wcb.ns.ca/",
+        taxNote: "HST 15%.",
+      },
+      NT: {
+        register: "https://www.justice.gov.nt.ca/en/corporate-registry/",
+        workersComp: "https://www.wscc.nt.ca/",
+        taxNote: "GST 5%. No territorial sales tax.",
+      },
+      NU: {
+        register: "https://gov.nu.ca/",
+        workersComp: "https://www.wscc.nt.ca/",
+        taxNote: "GST 5%. No territorial sales tax.",
+      },
+      ON: {
+        register: "https://www.ontario.ca/page/register-business-name",
+        workersComp: "https://www.wsib.ca/",
+        taxNote: "HST 13%.",
+      },
+      PE: {
+        register: "https://www.princeedwardisland.ca/en/topic/bizpal-business-permits-and-licences", // landing; verify specific registry URL
+        workersComp: "https://www.wcb.pe.ca/",
+        taxNote: "HST 15%.",
+      },
+      QC: {
+        register: "https://www.registraireentreprises.gouv.qc.ca/",
+        workersComp: "https://www.cnesst.gouv.qc.ca/",
+        taxNote: "GST 5% + QST 9.975%.",
+      },
+      SK: {
+        register: "https://www.isc.ca/Registry/BusinessRegistry/",
+        workersComp: "https://www.wcbsask.com/",
+        taxNote: "GST 5% + PST 6%.",
+      },
+      YT: {
+        register: "https://yukon.ca/en/doing-business/permits-licences-and-registrations", // landing; verify registry path
+        workersComp: "https://www.wcb.yk.ca/",
+        taxNote: "GST 5%. No territorial sales tax.",
+      },
+    };
+
+    const federal = {
+      bn: "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/registering-your-business/register.html",
+      craMyBiz: "https://www.canada.ca/en/revenue-agency/services/e-services/e-services-businesses/business-account.html",
+      gstHst: "https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses.html",
+      nameSearch: "https://www.nuans.com/", // NUANS search
+      corpFed: "https://ised-isde.canada.ca/site/corporations-canada/en",
+      casl: "https://fightspam.gc.ca/",
+      pipeda: "https://www.priv.gc.ca/en/privacy-topics/privacy-laws-in-canada/the-personal-information-protection-and-electronic-documents-act-pipeda/",
+      trademarks: "https://ised-isde.canada.ca/site/canadian-intellectual-property-office/en/trademarks",
+    };
+
+    const structures = [
+      {
+        id: "sole",
+        name: "Sole Proprietorship",
+        what: "Owned by one person. Easiest and lowest cost to start.",
+        pros: [
+          "Simple setup",
+          "Low ongoing paperwork",
+          "You keep all profits",
+        ],
+        cons: [
+          "Unlimited personal liability",
+          "Harder to raise capital",
+        ],
+      },
+      {
+        id: "partnership",
+        name: "Partnership",
+        what: "Two or more people share ownership.",
+        pros: ["Shared startup costs", "Flexible profit sharing"],
+        cons: ["Joint liability (unless limited partnership)", "Need a strong partnership agreement"],
+      },
+      {
+        id: "corporation",
+        name: "Corporation",
+        what: "Separate legal entity. Can be incorporated federally or provincially.",
+        pros: ["Limited liability", "Potential tax planning", "Easier to sell shares"],
+        cons: ["Higher setup/maintenance cost", "Continuous filings and records"],
+      },
+      {
+        id: "cooperative",
+        name: "Co‑operative",
+        what: "Owned and democratically controlled by members for mutual benefit.",
+        pros: ["Member control", "Community focused"],
+        cons: ["Complex governance", "May face funding constraints"],
+      },
+    ];
+
+    const stepsBase = [
+      { key: "structure", label: "Choose a Business Structure" },
+      { key: "name", label: "Choose & Clear Your Name" },
+      { key: "register", label: "Register or Incorporate" },
+      { key: "cra", label: "CRA Business Number & Tax Accounts" },
+      { key: "licences", label: "Licences & Permits" },
+      { key: "banking", label: "Banking & Bookkeeping" },
+      { key: "hiring", label: "Hiring & Workers’ Comp" },
+      { key: "privacy", label: "Privacy & Email Marketing Rules" },
+      { key: "brand", label: "Protect Your Brand (Optional)" },
+      { key: "finish", label: "Finish & Operate" },
+    ];
+
+    // ---------- State ----------
+    const $ = (q, el=document) => el.querySelector(q);
+    const $$ = (q, el=document) => [...el.querySelectorAll(q)];
+
+    const state = {
+      province: localStorage.getItem('province') || '',
+      industry: localStorage.getItem('industry') || 'general',
+      hiring: localStorage.getItem('hiring') || 'no',
+      revenue: localStorage.getItem('revenue') || 'gte30',
+      completed: JSON.parse(localStorage.getItem('completed') || '{}'),
+    };
+
+    // ---------- UI Wiring ----------
+    const provinceEl = $('#province');
+    const industryEl = $('#industry');
+    const hireSeg = $('#hireSeg');
+    const revSeg = $('#revSeg');
+    const generateBtn = $('#generate');
+    const resetBtn = $('#reset');
+    const guideEl = $('#guide');
+    const todoEl = $('#todo');
+    const summaryEl = $('#summary');
+    const stateInfoEl = $('#stateInfo');
+
+    if (state.province) provinceEl.value = state.province;
+    industryEl.value = state.industry;
+
+    // Segment controls
+    const setSeg = (wrap, value) => {
+      $$("button", wrap).forEach(b => b.classList.toggle('active', b.dataset.value === value));
+    };
+    setSeg(hireSeg, state.hiring);
+    setSeg(revSeg, state.revenue);
+
+    hireSeg.addEventListener('click', (e) => {
+      if (e.target.tagName !== 'BUTTON') return;
+      state.hiring = e.target.dataset.value; setSeg(hireSeg, state.hiring); persist();
+    });
+    revSeg.addEventListener('click', (e) => {
+      if (e.target.tagName !== 'BUTTON') return;
+      state.revenue = e.target.dataset.value; setSeg(revSeg, state.revenue); persist();
+    });
+
+    provinceEl.addEventListener('change', () => { state.province = provinceEl.value; persist(); });
+    industryEl.addEventListener('change', () => { state.industry = industryEl.value; persist(); });
+
+    generateBtn.addEventListener('click', () => {
+      if (!state.province) { alert('Please choose a province/territory.'); return; }
+      renderGuide(); renderChecklist();
+      window.scrollTo({ top: guideEl.offsetTop - 80, behavior: 'smooth' });
+    });
+
+    resetBtn.addEventListener('click', () => {
+      localStorage.removeItem('province');
+      localStorage.removeItem('industry');
+      localStorage.removeItem('hiring');
+      localStorage.removeItem('revenue');
+      localStorage.removeItem('completed');
+      Object.assign(state, { province: '', industry: 'general', hiring: 'no', revenue: 'gte30', completed: {} });
+      provinceEl.value = '';
+      industryEl.value = 'general';
+      setSeg(hireSeg, 'no'); setSeg(revSeg, 'gte30');
+      guideEl.innerHTML = ''; todoEl.innerHTML=''; summaryEl.textContent = 'Choose options and generate your plan.';
+      stateInfoEl.textContent = 'Unsaved';
+    });
+
+    function persist(){
+      localStorage.setItem('province', state.province);
+      localStorage.setItem('industry', state.industry);
+      localStorage.setItem('hiring', state.hiring);
+      localStorage.setItem('revenue', state.revenue);
+      localStorage.setItem('completed', JSON.stringify(state.completed));
+      stateInfoEl.textContent = 'Saved';
+    }
+
+    // ---------- Rendering ----------
+    function renderGuide(){
+      const r = resources[state.province];
+      const hHiring = state.hiring === 'yes';
+      const needGST = state.revenue === 'gte30';
+
+      guideEl.innerHTML = '';
+
+      // Step: Structure chooser
+      addStep('structure', {
+        title: 'Choose a Business Structure',
+        kicker: 'Pick what fits your risk and growth plans',
+        body: structureGrid(structures)
+          + infoRow('How do I choose?', `\
+            Consider liability (how much personal risk you accept), taxation, investor needs, and paperwork tolerance. \n\
+            Corporations add cost/complexity but offer limited liability and potential tax planning. Sole props are simplest but you bear all risk.`),
+      });
+
+      // Step: Name search
+      addStep('name', {
+        title: 'Choose & Clear Your Name',
+        kicker: 'Avoid conflicts before you print cards',
+        body: `
+          <div class="row">
+            <div class="col-6">
+              <div class="panel">
+                <strong>Check availability</strong>
+                <p class="muted">Search existing names and trademarks before registering.</p>
+                <div class="inline-links">
+                  <a href="${federal.nameSearch}" target="_blank" rel="noopener">NUANS search</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="panel">
+                <strong>Naming rules</strong>
+                <p class="muted">Each province has specific rules. Use plain, non‑misleading names and include required legal elements if incorporating.</p>
+              </div>
+            </div>
+          </div>
+        `,
+      });
+
+      // Step: Register
+      addStep('register', {
+        title: 'Register or Incorporate',
+        kicker: 'Provincial or federal incorporation; operating registration required provincially',
+        body: `
+          <div class="row">
+            <div class="col-6">
+              <div class="panel">
+                <strong>Province/territory</strong>
+                <p class="muted">Start here for your local registration/incorporation.</p>
+                <p class="inline-links"><a href="${r.register}" target="_blank" rel="noopener">Open your registry</a></p>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="panel">
+                <strong>Federal (optional)</strong>
+                <p class="muted">Incorporate federally, then register extra‑provincially where you operate.</p>
+                <p class="inline-links"><a href="${federal.corpFed}" target="_blank" rel="noopener">Corporations Canada</a></p>
+              </div>
+            </div>
+          </div>
+          ${infoRow('Province vs. Federal?', `\
+            Federal incorporation gives name protection across Canada and may help if you operate in multiple provinces. \n\
+            Provincial incorporation is simpler if you only operate in one province/territory. Either way, you generally still register where you do business.`)}
+        `,
+      });
+
+      // Step: CRA BN & GST/HST
+      addStep('cra', {
+        title: 'CRA Business Number & Tax Accounts',
+        kicker: needGST ? 'You indicated revenue ≥ $30k — register for GST/HST' : 'Consider voluntary GST/HST registration',
+        body: `
+          <div class="row">
+            <div class="col-6">
+              <div class="panel">
+                <strong>Get a Business Number (BN)</strong>
+                <p class="inline-links"><a href="${federal.bn}" target="_blank" rel="noopener">Register with CRA</a></p>
+                <p class="muted">After you get a BN, add program accounts as needed (GST/HST, payroll, import/export).</p>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="panel">
+                <strong>GST/HST</strong>
+                <p class="muted">${r.taxNote}</p>
+                <p class="inline-links"><a href="${federal.gstHst}" target="_blank" rel="noopener">GST/HST overview</a></p>
+              </div>
+            </div>
+          </div>
+        `,
+      });
+
+      // Step: Licences & Permits
+      addStep('licences', {
+        title: 'Licences & Permits',
+        kicker: 'Municipal, provincial/territorial, sometimes federal',
+        body: `
+          <div class="panel">
+            <p class="muted">Requirements vary by location and industry (e.g., food handling, construction, transport). Check your municipal and provincial websites for business permits and zoning.</p>
+            <div class="info"><span>Tip:</span> <button data-modal="permits">See common permits</button></div>
+          </div>
+        `,
+      });
+
+      // Step: Banking & Bookkeeping
+      addStep('banking', {
+        title: 'Banking & Bookkeeping',
+        kicker: 'Separate finances from day one',
+        body: `
+          <div class="row">
+            <div class="col-6">
+              <div class="panel">
+                <strong>Open a business bank account</strong>
+                <ul class="list">
+                  <li>Bring ID and your registration/incorporation documents.</li>
+                  <li>Keep business and personal transactions separate.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="panel">
+                <strong>Set up bookkeeping</strong>
+                <ul class="list">
+                  <li>Choose accounting software early.</li>
+                  <li>Track expenses, invoices, and receipts.</li>
+                  <li>Use CRA <a href="${federal.craMyBiz}" target="_blank" rel="noopener">My Business Account</a> to manage filings.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        `,
+      });
+
+      // Step: Hiring
+      addStep('hiring', {
+        title: 'Hiring & Workers’ Comp',
+        kicker: hHiring ? 'You indicated you will hire — set these up' : 'Skip if not hiring yet',
+        body: `
+          <div class="row">
+            <div class="col-6">
+              <div class="panel">
+                <strong>CRA Payroll</strong>
+                <ul class="list">
+                  <li>Open a payroll (RP) account under your BN before first remittance deadline.</li>
+                  <li>Withhold and remit CPP, EI, and income tax.</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="panel">
+                <strong>Workers’ compensation</strong>
+                <p class="muted">Register with your province/territory’s board if required.</p>
+                <p class="inline-links"><a href="${r.workersComp}" target="_blank" rel="noopener">Open workers’ comp site</a></p>
+              </div>
+            </div>
+          </div>
+        `,
+      });
+
+      // Step: Privacy & CASL
+      addStep('privacy', {
+        title: 'Privacy & Email Marketing Rules',
+        kicker: 'If you collect personal info or send promos',
+        body: `
+          <div class="row">
+            <div class="col-6">
+              <div class="panel">
+                <strong>PIPEDA (privacy)</strong>
+                <p class="muted">Have a simple privacy policy, collect only what you need, secure your data, and honor access/deletion requests.</p>
+                <p class="inline-links"><a href="${federal.pipeda}" target="_blank" rel="noopener">Learn about PIPEDA</a></p>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="panel">
+                <strong>CASL (anti‑spam)</strong>
+                <p class="muted">Get consent, identify your business in messages, and include an unsubscribe link.</p>
+                <p class="inline-links"><a href="${federal.casl}" target="_blank" rel="noopener">CASL official guidance</a></p>
+              </div>
+            </div>
+          </div>
+        `,
+      });
+
+      // Step: Brand
+      addStep('brand', {
+        title: 'Protect Your Brand (Optional)',
+        kicker: 'Names and logos can be trademarked',
+        body: `
+          <div class="panel">
+            <p class="muted">Consider registering a trademark to protect your brand across Canada.</p>
+            <p class="inline-links"><a href="${federal.trademarks}" target="_blank" rel="noopener">Trademark basics</a></p>
+          </div>
+        `,
+      });
+
+      // Step: Finish
+      addStep('finish', {
+        title: 'Finish & Operate',
+        kicker: 'You now have a clear path',
+        body: `
+          <div class="panel">
+            <ul class="list">
+              <li>Confirm your registrations and account numbers.</li>
+              <li>Set calendar reminders for tax deadlines.</li>
+              <li>Create simple SOPs (invoicing, expenses, payroll).</li>
+              <li>Add any industry‑specific permits (food, construction, transport, health, etc.).</li>
+            </ul>
+          </div>
+        `,
+      });
+
+      persist();
+      summaryEl.innerHTML = `<div>Province: <strong>${state.province}</strong></div>
+        <div>Industry: <strong>${state.industry}</strong></div>
+        <div>Hiring: <strong>${state.hiring}</strong></div>
+        <div>Revenue: <strong>${state.revenue === 'gte30' ? '≥ $30k' : '< $30k'}</strong></div>`;
+
+      // Open first step by default
+      const first = guideEl.querySelector('.step');
+      if (first) first.classList.add('open');
+
+      // Restore completed checkboxes
+      restoreChecks();
+    }
+
+    function structureGrid(items){
+      return `<div class="row">${items.map(s => `
+        <div class="col-6">
+          <div class="panel">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+              <div>
+                <strong>${s.name}</strong>
+                <div class="muted">${s.what}</div>
+              </div>
+              <button class="btn" data-modal="${s.id}">Details</button>
+            </div>
+          </div>
+        </div>
+      `).join('')}</div>`;
+    }
+
+    function infoRow(title, text){
+      return `<div class="panel" style="margin-top:12px;">
+        <div class="info"><strong>${title}</strong></div>
+        <div class="muted" style="margin-top:6px; white-space: pre-line;">${text}</div>
+      </div>`;
+    }
+
+    function addStep(key, { title, kicker, body }){
+      const idx = stepsBase.findIndex(s => s.key === key);
+      const stepId = `step-${key}`;
+      const done = !!state.completed[key];
+      const el = document.createElement('section');
+      el.className = 'card step' + (done ? ' open' : '');
+      el.dataset.key = key;
+      el.innerHTML = `
+        <div class="step-head">
+          <span class="badge">${String(idx+1).padStart(2,'0')}</span>
+          <div class="step-title">${title}</div>
+          <div class="kicker">${kicker || ''}</div>
+          <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 5l8 7-8 7" stroke="${'#9fb2d0'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="step-body">
+          ${body}
+          <div class="mark-row" style="margin-top:12px;">
+            <label class="mark"><input type="checkbox" data-complete="${key}" ${done?'checked':''}/> Mark complete</label>
+          </div>
+        </div>`;
+
+      el.querySelector('.step-head').addEventListener('click', (e)=>{
+        if (e.target.closest('a,button,input,label')) return; // avoid toggling when clicking controls
+        el.classList.toggle('open');
+      });
+
+      guideEl.appendChild(el);
+
+      // Completion checkbox
+      el.querySelector('[data-complete]')?.addEventListener('change', (e)=>{
+        const k = e.target.dataset.complete;
+        state.completed[k] = e.target.checked;
+        persist();
+        renderChecklist();
+      });
+
+      // Modal links inside this step
+      el.querySelectorAll('[data-modal]')?.forEach(btn => btn.addEventListener('click', () => openModal(btn.dataset.modal)));
+    }
+
+    function renderChecklist(){
+      const items = stepsBase.map(s => ({ key: s.key, label: s.label, done: !!state.completed[s.key] }));
+      todoEl.innerHTML = items.map(it => `
+        <li>
+          <input type="checkbox" ${it.done?'checked':''} data-jump="${it.key}" aria-label="${it.label}"/>
+          <span>${it.label}</span>
+        </li>
+      `).join('');
+
+      // Jump to step
+      $$('input[data-jump]', todoEl).forEach(cb => cb.addEventListener('change', (e) => {
+        const key = e.target.dataset.jump;
+        const step = guideEl.querySelector(`[data-key="${key}"]`);
+        if (step) {
+          step.classList.add('open');
+          step.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // also toggle completion
+          const box = step.querySelector(`[data-complete="${key}"]`);
+          if (box) { box.checked = e.target.checked; state.completed[key] = box.checked; persist(); }
+        }
+      }));
+    }
+
+    function restoreChecks(){
+      Object.entries(state.completed).forEach(([key, val]) => {
+        const cb = guideEl.querySelector(`[data-complete="${key}"]`);
+        if (cb) cb.checked = !!val;
+      });
+    }
+
+    // ---------- Modal ----------
+    const modal = $('#modal');
+    const modalTitle = $('#modalTitle');
+    const modalBody = $('#modalBody');
+    $('#closeModal').addEventListener('click', closeModal);
+    modal.addEventListener('click', (e)=>{ if (e.target === modal) closeModal(); });
+
+    function openModal(kind){
+      const byId = Object.fromEntries(structures.map(s => [s.id, s]));
+      if (byId[kind]){
+        const s = byId[kind];
+        modalTitle.textContent = s.name + ' — Pros & Cons';
+        modalBody.innerHTML = `
+          <div class="row">
+            <div class="col-6"><div class="panel"><strong>Pros</strong><ul class="list">${s.pros.map(p=>`<li>${p}</li>`).join('')}</ul></div></div>
+            <div class="col-6"><div class="panel"><strong>Cons</strong><ul class="list">${s.cons.map(c=>`<li>${c}</li>`).join('')}</ul></div></div>
+          </div>
+          <div class="panel" style="margin-top:12px;">
+            <strong>What it is</strong>
+            <p class="muted">${s.what}</p>
+          </div>`;
+      } else if (kind === 'permits') {
+        modalTitle.textContent = 'Common permits & licences';
+        modalBody.innerHTML = `
+          <div class="row">
+            <div class="col-6"><div class="panel"><strong>Municipal</strong><ul class="list">
+              <li>Business licence (city/town)</li>
+              <li>Zoning / home‑based approval</li>
+              <li>Sign permit</li>
+              <li>Fire/health inspections (where applicable)</li>
+            </ul></div></div>
+            <div class="col-6"><div class="panel"><strong>Provincial / Federal</strong><ul class="list">
+              <li>Food handling / liquor (hospitality)</li>
+              <li>Trade certifications (construction)</li>
+              <li>Transport/carrier permits</li>
+              <li>Health professional licences</li>
+            </ul></div></div>
+          </div>
+          <div class="tiny" style="margin-top:8px;">Note: verify requirements with your municipality and province/territory.</div>`;
+      } else {
+        modalTitle.textContent = 'More info';
+        modalBody.textContent = 'Details not found.';
+      }
+
+      modal.classList.add('open');
+    }
+    function closeModal(){ modal.classList.remove('open'); }
+
+    // ---------- Initial paint if prior state exists ----------
+    if (state.province) { renderGuide(); renderChecklist(); }
+  </script>
+</body>
+</html>
