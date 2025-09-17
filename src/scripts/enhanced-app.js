@@ -275,8 +275,11 @@ class EnhancedBusinessGuideApp {
   generateGuide() {
     const state = enhancedStateManager.getState();
     
+    console.log('Generate guide called with state:', state);
+    
     // Validate required fields
     if (!state.province) {
+      console.error('No province selected, current state:', state);
       this.showNotification('Please choose a province/territory.', 'error');
       return;
     }

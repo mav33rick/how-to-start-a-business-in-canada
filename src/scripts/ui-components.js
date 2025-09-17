@@ -97,6 +97,8 @@ export class UIComponents {
    */
   renderGuide() {
     const state = enhancedStateManager.getState();
+    console.log('UI renderGuide called with state:', state);
+    
     const provincialResources = dataManager.getProvincialResources(state.province);
     const federalResources = dataManager.getFederalResources();
     const steps = dataManager.getSteps();
@@ -104,6 +106,7 @@ export class UIComponents {
 
     if (!provincialResources) {
       console.error('Provincial resources not found for:', state.province);
+      console.error('Available provinces in data:', Object.keys(dataManager.resources?.provincial || {}));
       return;
     }
 
