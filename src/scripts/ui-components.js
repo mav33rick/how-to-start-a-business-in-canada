@@ -4,7 +4,7 @@
  */
 
 import dataManager from './data-manager.js';
-import stateManager from './state-manager.js';
+import enhancedStateManager from './enhanced-state-manager.js';
 
 /**
  * DOM utility functions
@@ -62,7 +62,7 @@ export class UIComponents {
    * Initialize UI with current state
    */
   initializeUI() {
-    const state = stateManager.getState();
+    const state = enhancedStateManager.getState();
     
     // Set form values from state
     if (state.province) {
@@ -96,7 +96,7 @@ export class UIComponents {
    * Render the complete step-by-step guide
    */
   renderGuide() {
-    const state = stateManager.getState();
+    const state = enhancedStateManager.getState();
     const provincialResources = dataManager.getProvincialResources(state.province);
     const federalResources = dataManager.getFederalResources();
     const steps = dataManager.getSteps();
@@ -144,7 +144,7 @@ export class UIComponents {
     stepElement.className = 'card step';
     stepElement.dataset.key = stepConfig.key;
     
-    const isCompleted = stateManager.isStepCompleted(stepConfig.key);
+    const isCompleted = enhancedStateManager.isStepCompleted(stepConfig.key);
     if (isCompleted) {
       stepElement.classList.add('open');
     }
@@ -155,9 +155,9 @@ export class UIComponents {
     // Determine kicker text based on conditions
     let kicker = stepConfig.kicker;
     if (stepConfig.key === 'cra' && stepConfig.kickerConditional) {
-      kicker = stateManager.isGSTRequired() ? stepConfig.kicker : stepConfig.kickerConditional;
+      kicker = enhancedStateManager.isGSTRequired() ? stepConfig.kicker : stepConfig.kickerConditional;
     } else if (stepConfig.key === 'hiring' && stepConfig.kickerConditional) {
-      kicker = stateManager.isHiring() ? stepConfig.kicker : stepConfig.kickerConditional;
+      kicker = enhancedStateManager.isHiring() ? stepConfig.kicker : stepConfig.kickerConditional;
     }
 
     stepElement.innerHTML = `
@@ -194,7 +194,7 @@ export class UIComponents {
       completionCheckbox.addEventListener('change', (event) => {
         const key = event.target.dataset.complete;
         const completed = event.target.checked;
-        stateManager.setStepCompleted(key, completed);
+        enhancedStateManager.setStepCompleted(key, completed);
         this.renderChecklist(); // Update checklist
       });
     }
@@ -524,7 +524,7 @@ export class UIComponents {
   renderChecklist() {
     const steps = dataManager.getSteps();
     const checklistItems = steps.map(step => {
-      const isCompleted = stateManager.isStepCompleted(step.key);
+      const isCompleted = enhancedStateManager.isStepCompleted(step.key);
       return `
         <li>
           <input type="checkbox" ${isCompleted ? 'checked' : ''} data-jump="${step.key}" aria-label="${step.label}"/>
@@ -550,7 +550,7 @@ export class UIComponents {
           const stepCheckbox = stepElement.querySelector(`[data-complete="${key}"]`);
           if (stepCheckbox) {
             stepCheckbox.checked = event.target.checked;
-            stateManager.setStepCompleted(key, event.target.checked);
+            enhancedStateManager.setStepCompleted(key, event.target.checked);
           }
         }
       });
@@ -577,7 +577,7 @@ export class UIComponents {
    * Restore step completion checkboxes from state
    */
   restoreStepCompletionState() {
-    const state = stateManager.getState();
+    const state = enhancedStateManager.getState();
     Object.entries(state.completed).forEach(([key, isCompleted]) => {
       const checkbox = this.elements.guideEl.querySelector(`[data-complete="${key}"]`);
       if (checkbox) {
