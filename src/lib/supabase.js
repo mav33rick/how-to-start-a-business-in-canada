@@ -29,7 +29,7 @@ class SupabaseClient {
         await this.loadSupabaseFromCDN();
       }
 
-      // Create Supabase client
+      // Create Supabase client with environment-aware configuration
       this.client = window.supabase.createClient(
         supabaseConfig.url,
         supabaseConfig.anonKey,
@@ -37,7 +37,8 @@ class SupabaseClient {
           auth: {
             autoRefreshToken: true,
             persistSession: true,
-            detectSessionInUrl: true
+            detectSessionInUrl: true,
+            redirectTo: supabaseConfig.auth.redirectTo
           }
         }
       );
@@ -118,7 +119,8 @@ class SupabaseClient {
       email,
       password,
       options: {
-        data: options.metadata || {}
+        data: options.metadata || {},
+        emailRedirectTo: supabaseConfig.auth.emailConfirmRedirectTo
       }
     });
   }
@@ -147,7 +149,7 @@ class SupabaseClient {
     return await client.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: window.location.origin
+        emailRedirectTo: supabaseConfig.auth.emailConfirmRedirectTo
       }
     });
   }
@@ -169,7 +171,7 @@ class SupabaseClient {
   async resetPassword(email) {
     const client = this.getClient();
     return await client.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`
+      redirectTo: supabaseConfig.auth.passwordResetRedirectTo
     });
   }
 

@@ -60,3 +60,14 @@
   from = "/app"
   to = "/index-modular.html"
   status = 200
+
+# Auth confirmation routes
+[[redirects]]
+  from = "/auth/confirm"
+  to = "/auth/confirm.html"
+  status = 200
+
+[[redirects]]
+  from = "/auth/reset-password"
+  to = "/auth/reset-password.html"
+  status = 200

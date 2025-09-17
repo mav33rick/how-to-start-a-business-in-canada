@@ -395,24 +395,50 @@ class EnhancedBusinessGuideApp {
    * @param {Error} error - Initialization error
    */
   handleInitializationError(error) {
-    // Fallback to basic functionality
-    this.showNotification('Some features may be limited due to initialization error', 'warning');
+    console.error('Application initialization error:', error);
     
-    // Try to initialize basic UI at least
-    try {
-      this.uiComponents = new UIComponents();
-      this.modalManager = new ModalManager();
-      window.modalManager = this.modalManager;
+    // Determine error type and show appropriate message
+    const isDevelopment = window.location.hostname === 'localhost' || 
+                         window.location.hostname === '127.0.0.1';
+    
+    if (error.message?.includes('Supabase') || error.message?.includes('auth')) {
+      // Authentication/database error - fall back to local mode
+      this.isAuthEnabled = false;
+      this.showNotification('Authentication features unavailable - using offline mode', 'warning');
       
-      // Use original state manager as fallback
-      import('./state-manager.js').then(({ default: fallbackStateManager }) => {
-        this.setupBasicEventListeners(fallbackStateManager);
+      try {
+        // Initialize with basic functionality
+        this.uiComponents = new UIComponents();
+        this.modalManager = new ModalManager();
+        window.modalManager = this.modalManager;
+        
+        // Set up basic event listeners without auth
+        this.setupEventListeners();
         this.uiComponents.initializeUI();
-      });
-    } catch (fallbackError) {
-      console.error('Even fallback initialization failed:', fallbackError);
-      document.body.innerHTML = '<div style="text-align: center; padding: 50px; color: #e6ebf2;">Application failed to load. Please refresh the page.</div>';
+        this.initialized = true;
+        
+        console.log('App initialized in offline mode');
+        return;
+      } catch (fallbackError) {
+        console.error('Fallback initialization failed:', fallbackError);
+      }
     }
+    
+    // Complete failure - show error page
+    const errorMessage = isDevelopment 
+      ? `Development Error: ${error.message}\n\nCheck console for details.`
+      : 'Application failed to load. Please refresh the page or try again later.';
+    
+    document.body.innerHTML = `
+      <div style="text-align: center; padding: 50px; color: #e6ebf2; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #ff6b6b; margin-bottom: 20px;">App Loading Error</h2>
+        <p style="margin-bottom: 30px; white-space: pre-line;">${errorMessage}</p>
+        <button onclick="window.location.reload()" 
+                style="padding: 12px 24px; background: #6aa7ff; color: white; border: none; border-radius: 8px; cursor: pointer;">
+          Refresh Page
+        </button>
+      </div>
+    `;
   }
 
   /**
