@@ -41,9 +41,16 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.supabase.co wss://*.supabase.co; img-src 'self' data: https:"
 
-# Redirects for modular version
+# Use modular version as default entry point
+[[redirects]]
+  from = "/"
+  to = "/index-modular.html"
+  status = 200
+  force = true
+
+# Alternative routes for modular version
 [[redirects]]
   from = "/guide"
   to = "/index-modular.html"
@@ -51,11 +58,5 @@
   
 [[redirects]]  
   from = "/app"
-  to = "/index-modular.html"
-  status = 200
-
-# Use modular version as default entry point
-[[redirects]]
-  from = "/"
   to = "/index-modular.html"
   status = 200
