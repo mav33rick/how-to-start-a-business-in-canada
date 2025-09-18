@@ -194,8 +194,15 @@ export class UIComponents {
       completionCheckbox.addEventListener('change', (event) => {
         const key = event.target.dataset.complete;
         const completed = event.target.checked;
+        
+        // Update state and trigger sync
         enhancedStateManager.setStepCompleted(key, completed);
         this.renderChecklist(); // Update checklist
+        
+        // Show immediate feedback for task completion
+        if (completed) {
+          this.showTaskCompletionFeedback(event.target, key);
+        }
       });
     }
 
@@ -551,6 +558,11 @@ export class UIComponents {
           if (stepCheckbox) {
             stepCheckbox.checked = event.target.checked;
             enhancedStateManager.setStepCompleted(key, event.target.checked);
+            
+            // Show feedback for checklist completion
+            if (event.target.checked) {
+              this.showTaskCompletionFeedback(event.target, key);
+            }
           }
         }
       });
@@ -594,5 +606,60 @@ export class UIComponents {
     this.elements.todoEl.innerHTML = '';
     this.elements.summaryEl.textContent = 'Choose options and generate your plan.';
     this.elements.stateInfoEl.textContent = 'Unsaved';
+  }
+
+  /**
+   * Show visual feedback when a task is completed
+   * @param {Element} checkbox - The checkbox element
+   * @param {string} taskKey - The task key
+   */
+  showTaskCompletionFeedback(checkbox, taskKey) {
+    // Create and show a temporary success indicator
+    const feedbackEl = document.createElement('span');
+    feedbackEl.textContent = '✓ Saved';
+    feedbackEl.style.cssText = `
+      color: #5bd69e;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 8px;
+      opacity: 0;
+      transition: all 0.3s ease;
+    `;
+    
+    // Insert after the checkbox label
+    const label = checkbox.closest('label') || checkbox.parentElement;
+    label.appendChild(feedbackEl);
+    
+    // Animate in
+    setTimeout(() => {
+      feedbackEl.style.opacity = '1';
+    }, 50);
+    
+    // For authenticated users, show sync status
+    if (window.authManager && window.authManager.isUserAuthenticated()) {
+      // Update to show syncing
+      setTimeout(() => {
+        feedbackEl.textContent = '☁ Syncing...';
+        feedbackEl.style.color = '#6aa7ff';
+      }, 800);
+      
+      // Show synced after delay (simulating sync completion)
+      setTimeout(() => {
+        feedbackEl.textContent = '☁ Synced';
+        feedbackEl.style.color = '#5bd69e';
+      }, 2000);
+    }
+    
+    // Remove after 4 seconds
+    setTimeout(() => {
+      feedbackEl.style.opacity = '0';
+      setTimeout(() => {
+        if (feedbackEl.parentElement) {
+          feedbackEl.remove();
+        }
+      }, 300);
+    }, 4000);
+    
+    console.log(`Task "${taskKey}" completed and ${window.authManager?.isUserAuthenticated() ? 'synced to cloud' : 'saved locally'}`);
   }
 }

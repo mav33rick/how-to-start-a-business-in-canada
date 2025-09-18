@@ -374,6 +374,12 @@ class EnhancedStateManager {
   setStepCompleted(key, completed) {
     this.state.completed[key] = completed;
     this.persistLocal();
+    
+    // For task completions, sync immediately if user is authenticated
+    if (completed && authManager.isUserAuthenticated()) {
+      console.log(`Task "${key}" completed - triggering immediate sync`);
+      this.scheduleSyncToCloud(500); // Fast sync for task completions
+    }
   }
 
   /**
