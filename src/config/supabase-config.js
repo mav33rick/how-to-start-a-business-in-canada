@@ -11,7 +11,7 @@ const isDevelopment = window.location.hostname === 'localhost' ||
 const isNetlify = window.location.hostname.includes('netlify.app') ||
                   window.location.hostname.includes('netlify.com');
 
-const PRODUCTION_URL = 'https://how-to-start-a-business-in-canada.netlify.app';
+const PRODUCTION_URL = 'https://startabusiness.netlify.app';
 
 // Get appropriate site URL
 function getSiteUrl() {
