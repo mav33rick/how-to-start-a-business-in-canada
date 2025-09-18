@@ -216,12 +216,16 @@ class EnhancedStateManager {
         completed: this.state.completed
       };
 
+      console.log('Syncing to cloud for user:', user.id, 'Data:', progressData);
+      
       const savedProgress = await supabaseClient.saveUserProgress(user.id, progressData);
+      
+      console.log('Cloud sync successful:', savedProgress);
 
       // Update metadata
       this.state._meta = {
         lastModified: new Date(savedProgress.updated_at).getTime(),
-        version: savedProgress.version,
+        version: savedProgress.version || 1,
         syncedAt: Date.now(),
         hasLocalChanges: false
       };
@@ -238,8 +242,17 @@ class EnhancedStateManager {
       return true;
     } catch (error) {
       console.error('Error syncing to cloud:', error);
-      this.setSyncStatus('error');
-      this.notifySyncListeners('error', 'Failed to sync progress');
+      
+      // Handle specific database errors
+      if (error.code === '23505') {
+        console.log('Duplicate key error detected, attempting to resolve...');
+        // This shouldn't happen with proper upsert, but let's handle it gracefully
+        this.setSyncStatus('error');
+        this.notifySyncListeners('error', 'Sync conflict detected - please refresh the page');
+      } else {
+        this.setSyncStatus('error');
+        this.notifySyncListeners('error', 'Failed to sync progress');
+      }
       return false;
     } finally {
       this.syncInProgress = false;

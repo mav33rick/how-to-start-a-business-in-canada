@@ -263,13 +263,15 @@ class SupabaseClient {
   async saveUserProgress(userId, progressData) {
     const client = this.getClient();
     
-    // Use upsert to handle both insert and update
+    // Use upsert with explicit conflict resolution on user_id
     const { data, error } = await client
       .from('user_progress')
       .upsert({
         user_id: userId,
         ...progressData,
         updated_at: new Date().toISOString()
+      }, {
+        onConflict: 'user_id'
       })
       .select()
       .single();
